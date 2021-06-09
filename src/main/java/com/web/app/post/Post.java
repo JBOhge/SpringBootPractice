@@ -1,27 +1,29 @@
 package com.web.app.post;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.web.app.user.User;
+
+import javax.persistence.*;
+
+@Entity
 public class Post {
-    private String message;
-    private int userId;
+
+
+    @Id
+    @GeneratedValue
     private int id;
+    private String message;
 
-    public Post(){
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User user;
+
+
+
+    public Post() {
 
     }
 
-    public Post(String message, int userId, int id) {
-        this.message = message;
-        this.userId = userId;
-        this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public Post(String message, int id) {
         this.message = message;
@@ -43,11 +45,18 @@ public class Post {
     public void setId(int id) {
         this.id = id;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
     @Override
     public String toString() {
         return "Post{" +
                 "message='" + message + '\'' +
-                ", userId=" + userId +
                 ", id=" + id +
                 '}';
     }
